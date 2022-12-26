@@ -1,30 +1,21 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Member extends BaseEntity {
+public class Delivery extends BaseEntity {
 
     @Id @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Column(name = "DELIVERY_ID")
     private Long id;
-    private String name;
+
+    @OneToOne(mappedBy = "delivery")
+    private Order order;
     private String city;
     private String street;
     private String zipcode;
-
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+    @Enumerated
+    private DeliveryStatus status;
 
     public Long getId() {
         return id;
@@ -34,12 +25,12 @@ public class Member extends BaseEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public String getCity() {
@@ -64,5 +55,13 @@ public class Member extends BaseEntity {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public DeliveryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
     }
 }
